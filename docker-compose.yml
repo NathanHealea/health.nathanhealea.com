@@ -1,24 +1,36 @@
 version: '3.9'
 
 services:
-  postgres:
-    image: postgres
-    container_name: ${PROJECT_NAME}-postgres
+  mysql:
+    image: mysql:latest
+    container_name: ${PROJECT_NAME}-mysql
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${PROJECT_NAME}_db
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      # - MYSQL_USER=${MYSQL_USER}
+      # - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
-      - 5432:5432
-    volumes: 
-      - ${POSTGRES_PATH}:/var/lib/postgresql/data
-    restart: unless-stopped
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - ${MYSQL_PATH}:/var/lib/mysql
+    restart: always
 
-  pgadmin4:
-    image: dpage/pgadmin4
-    container_name: ${PROJECT_NAME}-pgadmin4
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: ${PROJECT_NAME}-phpmyadmin
     environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      PMA_HOST: mysql
+      PMA_USER: ${PMA_USER}
+      PMA_PASSWORD: ${PMA_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-      - 8082:80
+      - 8090:80
+    depends_on:
+      - mysql
+    restart: always
+
+networks:
+  default:
+    name: ${PROJECT_NAME}-network

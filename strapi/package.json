@@ -9,15 +9,16 @@
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
   "dependencies": {
-    "@strapi/strapi": "4.12.1",
-    "@strapi/plugin-users-permissions": "4.12.1",
     "@strapi/plugin-i18n": "4.12.1",
-    "mysql": "2.18.1"
+    "@strapi/plugin-users-permissions": "4.12.1",
+    "@strapi/strapi": "4.12.1",
+    "mysql2": "^3.5.2"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Nathan Healea",
+    "email": "nate.healea@gmail.com",
+    "url": "https://nathanhealea.com"
   },
   "strapi": {
     "uuid": "45fe88a3-c650-40aa-991c-a8ca18cdc255"
